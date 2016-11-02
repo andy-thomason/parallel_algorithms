@@ -9,7 +9,7 @@
 #include <algorithm>
 #include "for_each.hpp"
 
-// note this is not ideal. Smarter algoithms are possible but it is simple.
+// note this is not ideal. Smarter algorithms are possible but it is simple.
 namespace par {
   template <class Fn, class FwdIt, int ChunkSize=0x10000, int NumCPUs=8>
   void sort(FwdIt b, FwdIt e, Fn func) {
@@ -26,8 +26,8 @@ namespace par {
         chunks.push_back(std::make_pair(cb, ce));
       } else {
         auto pivot = cb[(ce-cb)/2];
-        auto m = std::partition(cb, ce, [pivot](const auto &val) {
-          return val < pivot;
+        auto m = std::partition(cb, ce, [pivot, &func](const auto &val) {
+          return func(val, pivot);
         });
         if (m != ce && cb != m) {
           to_do.push_back(std::make_pair(m, ce));
