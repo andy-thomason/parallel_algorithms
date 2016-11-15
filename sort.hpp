@@ -3,6 +3,20 @@
 // (C) Andy Thomason 2016
 // Simple example of a parallel sort
 //
+// Note that C++17 and SYCL will bring std::sort with parallel semantics soon.
+//
+// How it works:
+//
+// We use std::partition to swap elements in the array into chunks.
+// We recursively partition these chunks until they are small enough to be sorted by std::sort
+//   on many threads.
+// Finally, we run NumCPUs asyncs to sort the individual chunks.
+//
+// This may be improved by using a bucket sort (provided the data is random)
+//   and a second partition for equal elements (provided the data has repeats).
+//
+// Ask yourself, does my data need to be fully sorted?
+//
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <vector>

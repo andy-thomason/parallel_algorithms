@@ -1,4 +1,3 @@
-
 #include "for_each.hpp"
 #include <vector>
 #include <algorithm>

@@ -1,7 +1,17 @@
 ////////////////////////////////////////////////////////////////////////////////
 //
 // (C) Andy Thomason 2016
-// Simple example of a parallel for_each
+//
+// Simple example of a for_each iterator
+//
+// Note that C++17 and SYCL will bring std::for_each with parallel semantics soon.
+//
+// How it works:
+//
+// We create NumCPUs asyncs (one per hardware thread typically) and use an atomic
+//   variable to count blocks of ChunkSize elements which we iterate sequentially.
+//
+// The iterator must be random-accessible as we need to jump forward.
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -10,7 +20,6 @@
 #include <future>
 
 namespace par {
-
   template <class Fn, class FwdIt, int ChunkSize=0x1000, int NumCPUs=8>
   void for_each(FwdIt b, FwdIt e, Fn func) {
     size_t size = e - b;
@@ -29,6 +38,5 @@ namespace par {
     }
     for (auto &f : futures) f.wait();
   }
-
 }
 
