@@ -6,3 +6,13 @@ Makefile
 cmake_install.cmake
 install_manifest.txt
 CTestTestfile.cmake
+
+*.obj
+*.suo
+*.pdb
+Debug/
+Release/
+*.sdf
+*.opensdf
+
+

@@ -12,7 +12,7 @@ int main() {
     auto start = std::chrono::high_resolution_clock::now();
     par::for_each(x.begin(), x.end(), [](int &r) { r = 0; });
     auto end = std::chrono::high_resolution_clock::now();
-    printf("%10ldns\n", std::chrono::nanoseconds(end - start).count());
+    printf("%10dns\n", (int)std::chrono::nanoseconds(end - start).count());
   }
 
   printf("\nstd::for_each\n");
@@ -20,7 +20,7 @@ int main() {
     auto start = std::chrono::high_resolution_clock::now();
     std::for_each(x.begin(), x.end(), [](int &r) { r = 0; });
     auto end = std::chrono::high_resolution_clock::now();
-    printf("%10ldns\n", std::chrono::nanoseconds(end - start).count());
+    printf("%10dns\n", (int)std::chrono::nanoseconds(end - start).count());
   }
 }
 

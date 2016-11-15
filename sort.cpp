@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <chrono>
+#include <random>
 
 int main() {
   std::ranlux24 gen;
