@@ -17,27 +17,27 @@
 #include "thread_check.hpp"
 #include <mutex>
 #include <future>
+#include <vector>
 
 class A {
-  std::vector<int> ints;
-
-  // Replace this with std::mutex check; only when the thread check fails.
-  // std::mutex check;
-  par::thread_check<A> check;
+  std::vector<int> ints_;
+  std::mutex mtx_;
 public:
   void push(int a) {
-    std::lock_guard<decltype(check)> lock(check);
-    ints.push_back(a);
+    // replace this with std::lock_guard in release builds
+    par::thread_check<A> lock(mtx_);
+    ints_.push_back(a);
   }
 };
 
 class B {
-  std::vector<float> floats;
-  par::thread_check<B> check;
+  std::vector<float> floats_;
+  std::mutex mtx_;
 public:
   void push(float a) {
-    std::lock_guard<decltype(check)> lock(check);
-    floats.push_back(a);
+    // replace this with std::lock_guard in release builds
+    par::thread_check<B> lock(mtx_);
+    floats_.push_back(a);
   }
 };
 
@@ -55,5 +55,8 @@ int main() {
   auto t2 = std::async(std::launch::async, fn);
 
   t1.wait(); t2.wait();
+
+  par::thread_check<A>::report();
+  par::thread_check<B>::report();
 }
 
