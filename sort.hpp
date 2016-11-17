@@ -21,7 +21,6 @@
 
 #include <vector>
 #include <algorithm>
-#include "for_each.hpp"
 
 // note this is not ideal. Smarter algorithms are possible but it is simple.
 namespace par {
