@@ -21,6 +21,9 @@
 
 #include <vector>
 #include <algorithm>
+#include <atomic>
+#include <future>
+#include <array>
 
 // note this is not ideal. Smarter algorithms are possible but it is simple.
 namespace par {

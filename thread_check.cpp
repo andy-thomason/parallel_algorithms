@@ -42,8 +42,10 @@ public:
 };
 
 int main() {
+  // A is used by both Asyncs and so needs the mutex.
   A a;
   auto fn = [&a]() {
+    // B is local to the Async and so does not need the mutex.
     B b;
     for (int i = 0; i != 10000; ++i) {
       a.push(1);
@@ -51,11 +53,13 @@ int main() {
     }
   };
 
+  // Run both asyncs.
   auto t1 = std::async(std::launch::async, fn);
   auto t2 = std::async(std::launch::async, fn);
 
   t1.wait(); t2.wait();
 
+  // Report results.
   par::thread_check<A>::report();
   par::thread_check<B>::report();
 }
